@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Organizer
 {
-	public class ShiftHighestSort
+    public class ShiftHighestSort
     {
         private List<int> array = new List<int>();
 
@@ -27,7 +29,24 @@ namespace Organizer
         /// <param name="high">De index within this.array to stop with</param>
         private void SortFunction(int low, int high)
         {
-            throw new NotImplementedException();
-        }    
+            int n = high;
+            for (int i = low; i <= high; i++)
+            {
+                for (int j = low; j <= n; j++)
+                {
+                    if ((j + 1) <= n)
+                    {
+                        if (array[j] > array[j + 1])
+                        {
+                            // swap index
+                            int temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                }
+                n--;
+            }
+        }
     }
 }

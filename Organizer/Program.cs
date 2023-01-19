@@ -5,40 +5,72 @@ namespace Organizer
 {
     public class Program
     {
+        protected static int amount = 4;
+
         public static void Main(string[] args)
         {
-            // Press <F5> to run this code, when "Hello World!" appears in a black box, remove the line below and write your code below.
-            Console.WriteLine("Hello World!");
-            ShowList("Example of ShowList", new List<int>() { -33, 3, 2, 2, 3, 34, 34, 32, 1, 3, 5, 3, -22, -99, 33, -22, 11, 3, 33, 12, -2, -21, 4, 34, 22, 15, 34,-22 });
+            // set amount of ints
+            //int amount = 10;
+            List<int> randomInts = RandomInts(Program.amount);
+
+            // write unordered list
+            Console.WriteLine("Unordered list:");
+            for (int i = 0; i < amount; i++)
+            {
+                Console.WriteLine(randomInts[i]);
+            }
+
+            // order ints
+            var ShiftHighestSort = new ShiftHighestSort();
+            List<int> orderedInts = ShiftHighestSort.Sort(randomInts);
+
+            // write ordered list
+            Console.WriteLine("\nOrdered list:");
+            for (int i = 0; i < amount; i++)
+            {
+                Console.WriteLine(orderedInts[i]);
+            }
+
+            // check if list is ordered
+            if (ValidateInt(orderedInts))
+            {
+                Console.WriteLine("\nCheck succes: List is ordered.");
+            }
+            else
+            {
+                Console.WriteLine("\nCheck failed: List is not ordered.");
+            }
         }
 
-
-        /* Example of a static function */
-
-        /// <summary>
-        /// Show the list in lines of 20 numbers each
-        /// </summary>
-        /// <param name="label">The label for this list</param>
-        /// <param name="theList">The list to show</param>
-        public static void ShowList(string label, List<int> theList)
+        private static List<int> RandomInts(int amount)
         {
-            int count = theList.Count;
-            if (count > 100)
+            Random rnd = new Random();
+            List<int> randomInts = new List<int>();
+
+            // add x amount of random ints to list
+            for (int i = 0; i < amount; i++)
             {
-                count = 300; // Do not show more than 300 numbers
+                int n = rnd.Next(-99, 99);
+                randomInts.Add(n);
             }
-            Console.WriteLine();
-            Console.Write(label);
-            Console.Write(':');
-            for (int index = 0; index < count; index++)
+
+            return randomInts;
+        }
+
+        private static bool ValidateInt(List<int> input)
+        {
+            bool check = true;
+            for (int i = 0; i <= Program.amount - 1; i++)
             {
-                if (index % 20 == 0) // when index can be divided by 20 exactly, start a new line
+                if ((i + 1) <= Program.amount - 1)
                 {
-                    Console.WriteLine();
+                    if (input[i] > input[i + 1])
+                    {
+                        check = false;
+                    }
                 }
-                Console.Write(string.Format("{0,3}, ", theList[index]));  // Show each number right aligned within 3 characters, with a comma and a space
             }
-            Console.WriteLine();
+            return check;
         }
     }
 }
